@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFuture - 可持续能源解决方案</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2ecc71;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #e74c3c;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* 首页横幅 */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+        
+        /* 关于我们部分 */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+        }
+        
+        .section-title p {
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 覆盖用的总部大楼图片，完全填充父容器并保持裁剪 */
+        .about-image .about-cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* 产品部分 */
+        .products {
+            background-color: var(--light);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        /* 产品卡片上覆盖图片的样式：填充并裁剪 */
+        .product-image .product-image-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .product-content {
+            padding: 20px;
+        }
+        
+        .product-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        /* 团队部分 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--dark);
+        }
+
+        /* 头像图片在圆形容器内填充并保持裁剪 */
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+        
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .member-role {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        /* 友情赞助区 */
+        .sponsors {
+            padding: 60px 0 40px;
+            background-color: #fff;
+        }
+
+        .sponsors .section-title h2::after {
+            background-color: var(--secondary);
+        }
+
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: stretch;
+            margin-top: 30px;
+        }
+
+        .sponsor-card {
+            background: linear-gradient(180deg, #ffffff, #f7f9fb);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 10px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sponsor-card:focus,
+        .sponsor-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            outline: none;
+        }
+
+        .sponsor-logo {
+            width: 160px;
+            height: 90px;
+            border-radius: 6px;
+            background-color: #e9eef6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .sponsor-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .sponsor-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .sponsor-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* 覆盖提示在 hover 时显示 */
+        .sponsor-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(46, 204, 113, 0.06), rgba(52, 152, 219, 0.06));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .sponsor-card:hover .sponsor-overlay,
+        .sponsor-card:focus .sponsor-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+        }
+        
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="logo-text">EcoFuture</div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#products">产品服务</a></li>
+                    <li><a href="#team">管理团队</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 首页横幅 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>塑造可持续的未来</h1>
+                <p>EcoFuture致力于开发创新环保技术，为全球能源转型提供解决方案，建设更绿色、更清洁的地球。</p>
+                <a href="#about" class="btn">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>关于我们</h2>
+                <p>EcoFuture是一家领先的环保科技公司，专注于研发和推广可持续能源解决方案。</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>我们的使命</h3>
+                    <p>EcoFuture成立于2020年，我们的使命是通过创新技术减少碳排放，推动全球能源转型。我们相信，通过科技的力量，我们可以创造一个更加可持续的未来。</p>
+                    <p>我们的团队由来自世界各地的科学家、工程师和环保专家组成，共同致力于开发高效、经济、可扩展的清洁能源解决方案。</p>
+                    <p>目前，我们的技术已经应用于全球30多个国家，帮助减少了超过500万吨的二氧化碳排放。</p>
+                    <a href="#products" class="btn">查看我们的产品</a>
+                </div>
+                <div class="about-image">
+                    <div style="width:100%; height:400px; position:relative;">
+                        <img src="https://imgtu.com/uploads/1l6ga3ml/r-img_20251101_170828.webp" alt="公司总部大楼" class="about-cover-img" loading="lazy">
+                        <!-- 如需保留文字覆盖，可取消下方注释并调整样式 -->
+                        <!-- <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:white; font-size:1.5rem; pointer-events:none;">公司总部大楼</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品服务 -->
+    <section class="section products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>产品与服务</h2>
+                <p>我们提供全方位的可持续能源解决方案，从家庭到工业应用。</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image" style="background:transparent;">
+                        <img src="https://imgtu.com/uploads/383m07jy/t-img_20251102_151140.webp" alt="太阳能解决方案" class="product-image-img" loading="lazy">
+                    </div>
+                    <div class="product-content">
+                        <h3>太阳能解决方案</h3>
+                        <p>高效太阳能电池板和储能系统，为家庭和企业提供清洁能源。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background:transparent;">
+                        <img src="https://imgtu.com/uploads/3cfq0hp3/t-img_20251102_164720.webp" alt="风能技术" class="product-image-img" loading="lazy">
+                    </div>
+                    <div class="product-content">
+                        <h3>风能技术</h3>
+                        <p>创新的小型风力涡轮机，适合城市和乡村环境。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background:transparent;">
+                        <img src="https://imgtu.com/uploads/3d7fq6ag/t-img_20251102_170359.webp" alt="废物转化能源" class="product-image-img" loading="lazy">
+                    </div>
+                    <div class="product-content">
+                        <h3>废物转化能源</h3>
+                        <p>将有机废物转化为清洁能源和肥料的先进系统。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 管理团队 -->
+    <section class="section" id="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>管理团队</h2>
+                <p>认识我们的领导团队，他们带领EcoFuture实现环保使命。</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">张明</div>
+                    <div class="member-role">首席执行官</div>
+                    <p>拥有15年清洁能源行业经验，曾领导多个国际环保项目。</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://imgtu.com/uploads/3qzil2br/t-img_20251102_173410.webp" alt="张齐家" loading="lazy" />
+                    </div>
+                    <div class="member-name">张齐家</div>
+                    <div class="member-role">首席技术官</div>
+                    <p>环境工程博士，专注于可再生能源技术创新。</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">王强</div>
+                    <div class="member-role">首席运营官</div>
+                    <p>负责全球业务运营，确保项目高效实施。</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">陈芳</div>
+                    <div class="member-role">市场总监</div>
+                    <p>负责品牌建设和全球市场拓展。</p>
+                </div>
+                    <!-- 新增的团队成员 -->
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">刘慧</div>
+                        <div class="member-role">首席财务官</div>
+                        <p>负责公司财务规划与风险管理，支持公司的可持续发展战略。</p>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 友情赞助 -->
+    <section class="section sponsors" id="sponsors">
+        <div class="container">
+            <div class="section-title">
+                <h2>友情赞助</h2>
+                <p>感谢以下合作伙伴对我们项目的支持。点击品牌了解更多。</p>
+            </div>
+
+            <div class="sponsor-grid" role="list">
+                <a class="sponsor-card" href="#" data-index="0" target="_blank" rel="noopener" role="listitem" aria-label="赞助商 A - 访问网站" tabindex="0">
+                    <div class="sponsor-logo">
+                        <img src="https://imgtu.com/uploads/3s982379/t-img_20251102_172303.webp" alt="赞助商A Logo" loading="lazy" data-full="https://imgtu.com/uploads/3s982379/t-img_20251102_172303.webp">
+                    </div>
+                    <div class="sponsor-name">赞助商 A</div>
+                    <div class="sponsor-meta">技术支持伙伴</div>
+                    <div class="sponsor-overlay">查看大图 / 访问赞助商 A</div>
+                </a>
+
+                <a class="sponsor-card" href="#" data-index="1" target="_blank" rel="noopener" role="listitem" aria-label="赞助商 B - 访问网站" tabindex="0">
+                    <div class="sponsor-logo">
+                        <img src="https://via.placeholder.com/300x150?text=Sponsor+2" alt="赞助商B Logo" loading="lazy" data-full="https://via.placeholder.com/1200x600?text=Sponsor+2+Large">
+                    </div>
+                    <div class="sponsor-name">赞助商 B</div>
+                    <div class="sponsor-meta">战略合作伙伴</div>
+                    <div class="sponsor-overlay">查看大图 / 访问赞助商 B</div>
+                </a>
+
+                <a class="sponsor-card" href="#" data-index="2" target="_blank" rel="noopener" role="listitem" aria-label="赞助商 C - 访问网站" tabindex="0">
+                    <div class="sponsor-logo">
+                        <img src="https://via.placeholder.com/300x150?text=Sponsor+3" alt="赞助商C Logo" loading="lazy" data-full="https://via.placeholder.com/1200x600?text=Sponsor+3+Large">
+                    </div>
+                    <div class="sponsor-name">赞助商 C</div>
+                    <div class="sponsor-meta">社区支持</div>
+                    <div class="sponsor-overlay">查看大图 / 访问赞助商 C</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EcoFuture</h3>
+                    <p>致力于创造可持续的未来，通过创新技术解决全球能源挑战。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#products">产品服务</a></li>
+                        <li><a href="#team">管理团队</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 北京市朝阳区科技园A座</li>
+                        <li><i class="fas fa-phone"></i> +86 10 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@ecofuture.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 EcoFuture Technologies. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lightbox for sponsor images
+        (function(){
+            const sponsorImgs = Array.from(document.querySelectorAll('.sponsor-logo img'));
+            if(!sponsorImgs.length) return;
+
+            // Build array of full image URLs
+            const imgs = sponsorImgs.map(img => img.dataset.full || img.src);
+
+            // Create lightbox elements
+            const lb = document.createElement('div');
+            lb.id = 'lightbox';
+            lb.style.cssText = 'position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:2000;background:rgba(0,0,0,0.8);';
+            lb.innerHTML = `
+                <div class="lb-inner" style="position:relative;max-width:90%;max-height:90%;">
+                    <button class="lb-close" aria-label="关闭" style="position:absolute;right:-10px;top:-10px;background:#fff;border-radius:50%;border:none;width:36px;height:36px;cursor:pointer;font-weight:700;">×</button>
+                    <button class="lb-prev" aria-label="上一张" style="position:absolute;left:-50px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#fff;font-size:2rem;cursor:pointer;">‹</button>
+                    <img class="lb-img" src="" alt="" style="max-width:100%;max-height:80vh;border-radius:6px;display:block;margin:0 auto;"/>
+                    <button class="lb-next" aria-label="下一张" style="position:absolute;right:-50px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#fff;font-size:2rem;cursor:pointer;">›</button>
+                </div>
+            `;
+            document.body.appendChild(lb);
+
+            const lbImg = lb.querySelector('.lb-img');
+            const btnClose = lb.querySelector('.lb-close');
+            const btnPrev = lb.querySelector('.lb-prev');
+            const btnNext = lb.querySelector('.lb-next');
+            let current = 0;
+
+            function openLightbox(index){
+                current = (index + imgs.length) % imgs.length;
+                lbImg.src = imgs[current];
+                lb.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // focus for accessibility
+                btnClose.focus();
+            }
+
+            function closeLightbox(){
+                lb.style.display = 'none';
+                document.body.style.overflow = '';
+                lbImg.src = '';
+            }
+
+            function prev(){ openLightbox(current - 1); }
+            function next(){ openLightbox(current + 1); }
+
+            // Attach click on thumbnails
+            sponsorImgs.forEach((img, idx) =>{
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openLightbox(idx);
+                });
+                // also support Enter on parent sponsor-card
+                const parentCard = img.closest('.sponsor-card');
+                if(parentCard){
+                    parentCard.addEventListener('keydown', function(e){
+                        if(e.key === 'Enter' || e.key === ' '){
+                            e.preventDefault();
+                            openLightbox(idx);
+                        }
+                    });
+                }
+            });
+
+            // Controls
+            btnClose.addEventListener('click', closeLightbox);
+            btnPrev.addEventListener('click', prev);
+            btnNext.addEventListener('click', next);
+
+            lb.addEventListener('click', function(e){
+                if(e.target === lb) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function(e){
+                if(lb.style.display !== 'flex') return;
+                if(e.key === 'Escape') closeLightbox();
+                if(e.key === 'ArrowLeft') prev();
+                if(e.key === 'ArrowRight') next();
+            });
+        })();
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.backgroundColor = 'white';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
